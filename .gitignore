@@ -1,3 +1,10 @@
 /bin/
+/build/
 /charImg/
+.gradle/
+
 .DS_Store
+
+# IDEs
+.idea/
+.vscode/
