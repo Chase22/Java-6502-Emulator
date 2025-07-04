@@ -15,6 +15,14 @@ java {
     }
 }
 
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.13.2")) // Make sure junit versions are compatible
+    testImplementation("org.junit.jupiter:junit-jupiter") // JUnit 5 api
+    testImplementation("org.assertj:assertj-core:3.27.3") // AssertJ for fluent assertions
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher") // JUnit 5 runtime support
+}
+
 // Add 'src/' as a source directory
 // TODO: Sources should be move to src/main/java
 sourceSets.main {
@@ -32,4 +40,8 @@ sourceSets.test {
     java {
         srcDirs("test")
     }
+}
+
+tasks.test {
+    useJUnitPlatform() // Use JUnit 5 for testing
 }
