@@ -9,32 +9,29 @@ public class RomTest {
 	public void shouldInitializeROM() {
 		ROM rom = new ROM();
 
-		assertThat(rom.getROMArray()).hasSize(0x8000);
-		for (byte b : rom.getROMArray()) {
+		assertThat(rom.getData()).hasSize(0x8000);
+		for (byte b : rom.getData()) {
 			assertThat(b).isEqualTo((byte) 0);
 		}
 	}
 
 	@Test
 	public void shouldSetRomFromArray() {
-		ROM rom = new ROM();
 		byte[] testArray = createTestArray(0x8);
+		ROM rom = new ROM(testArray);
 
-		rom.setROMArray(testArray);
-
-		assertThat(rom.getROMArray()).isEqualTo(testArray);
+		assertThat(rom.getData()).isEqualTo(testArray);
 	}
 
 	@Test
 	public void shouldReadByteFromROM() {
-		ROM rom = new ROM();
 		byte[] testArray = createTestArray(0x8000);
-		rom.setROMArray(testArray);
+		ROM rom = new ROM(testArray);
 
-		assertThat(rom.read((short) 0)).isEqualTo((byte) 0);
-		assertThat(rom.read((short) 1)).isEqualTo((byte) 1);
-		assertThat(rom.read((short) 255)).isEqualTo((byte) 255);
-		assertThat(rom.read((short) 256)).isEqualTo((byte) 0);
+		assertThat(rom.read((short) 0x8000)).isEqualTo((byte) 0);
+		assertThat(rom.read((short) 0x8001)).isEqualTo((byte) 1);
+		assertThat(rom.read((short) 0x80FF)).isEqualTo((byte) 255);
+		assertThat(rom.read((short) 0x8100)).isEqualTo((byte) 0);
 	}
 
 	@Test
@@ -42,8 +39,8 @@ public class RomTest {
 		byte[] testArray = createTestArray(0x8);
 		ROM rom = new ROM(testArray);
 
-		String romString = rom.toString(8, true);
-		assertThat(romString).isEqualTo("0000: 00 01 02 03 04 05 06 07");
+		String romString = rom.formatToString(8, true);
+		assertThat(romString).isEqualTo("8000: 00 01 02 03 04 05 06 07");
 	}
 
 	@Test
@@ -51,8 +48,8 @@ public class RomTest {
 		byte[] testArray = createTestArray(0x6);
 		ROM rom = new ROM(testArray);
 
-		String romString = rom.toString(8, true);
-		assertThat(romString).isEqualTo("0000: 00 01 02 03 04 05");
+		String romString = rom.formatToString(8, true);
+		assertThat(romString).isEqualTo("8000: 00 01 02 03 04 05");
 	}
 
 	@Test
@@ -60,17 +57,8 @@ public class RomTest {
 		byte[] testArray = createTestArray(0x8);
 		ROM rom = new ROM(testArray);
 
-		String romString = rom.toString(8, false);
+		String romString = rom.formatToString(8, false);
 		assertThat(romString).isEqualTo("00 01 02 03 04 05 06 07");
-	}
-
-	@Test
-	public void shouldConvertROMToStringWithOffset() {
-		byte[] testArray = createTestArray(0x8);
-		ROM rom = new ROM(testArray);
-
-		String romString = rom.toStringWithOffset(8, 0x8000, true);
-		assertThat(romString).isEqualTo("8000: 00 01 02 03 04 05 06 07");
 	}
 
 	private byte[] createTestArray(int size) {

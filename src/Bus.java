@@ -4,7 +4,7 @@ public class Bus {
 
 	public static byte read(short address) {
 		if (Short.toUnsignedInt(address) >= 0x8000) {
-			return EaterEmulator.rom.read((short)(address-0x8000));
+			return EaterEmulator.rom.read(address);
 		} else if (Short.toUnsignedInt(address) <= VIA_ADDRESS+16 && Short.toUnsignedInt(address) >= VIA_ADDRESS) {
 			return EaterEmulator.via.read(address);
 		} else if (Short.toUnsignedInt(address) <= ACIA_ADDRESS+3 && Short.toUnsignedInt(address) >= ACIA_ADDRESS) {
