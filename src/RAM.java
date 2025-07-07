@@ -1,55 +1,38 @@
-public class RAM {
-	private byte[] array;
-	public String RAMString = "";
+import memory.RandomAccessMemory;
+
+public class RAM extends RandomAccessMemory {
+	public String RAMString;
 	
 	public RAM() {
-		array = new byte[0x8000];
-		for (int i = 0; i<0x8000; i++) {
-			array[i] = (byte)0x00;
-		}
-		RAMString = this.toString(8, true);
+		super(0x8000);
+		RAMString = this.formatToString();
 	}
 	
 	public RAM(byte[] theArray) {
-		array = theArray;
-		RAMString = this.toString(8, true);
+		super(theArray);
+		RAMString = this.formatToString();
 	}
 
+	/**
+	 * @deprecated Use {@link #getData()} instead to retrieve the RAM array.
+	 */
+	@Deprecated
 	public byte[] getRAMArray() {
-		return array;
+		return getData();
 	}
 
+	/**
+	 * @deprecated Avoid replacing the entire RAM array. Create a new instance if needed.
+	 */
+	@Deprecated
 	public void setRAMArray(byte[] array) {
-		this.array = array;
-		RAMString = this.toString(8, true);
+		this.data = array;
+		RAMString = this.formatToString();
 	}
-	
-	public byte read(short address) {
-		return array[Short.toUnsignedInt(address)];
-	}
-	
+
+	@Override
 	public void write(short address, byte data) {
-		array[Short.toUnsignedInt(address)] = data;
-		RAMString = this.toString(8, true);
-	}
-	
-	public String toString(int bytesPerLine, boolean addresses) {
-		StringBuilder sb = new StringBuilder();
-		
-		if (addresses)
-			sb.append("0000: ");
-		
-		for (int i = 1; i <= array.length; i++) {
-			if ((i%bytesPerLine != 0) || (i == 0)) {
-				sb.append(ROMLoader.byteToHexString(array[i-1])+" ");
-			} else {
-				String zeroes = "0000";
-				sb.append(ROMLoader.byteToHexString(array[i-1])+"\n");
-				if (addresses)
-					sb.append(zeroes.substring(0, Math.max(0, 4-Integer.toHexString(i).length()))+Integer.toHexString(i)+": ");
-			}
-		}
-		
-		return sb.toString();
+		super.write(address, data);
+		RAMString = this.formatToString();
 	}
 }
