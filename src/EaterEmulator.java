@@ -1,6 +1,8 @@
 //Original Code by Dylan Speiser
 //https://github.com/DylanSpeiser
 
+import ui.EaterPanel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,6 +67,9 @@ public class EaterEmulator extends JFrame implements ActionListener {
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
+
+		EaterPanel eaterPanel = new EaterPanel();
+		cpu.reset();
 		
 		//Open .bin file button
 		ROMopenButton.setVisible(true);
@@ -153,6 +158,8 @@ public class EaterEmulator extends JFrame implements ActionListener {
 		this.setContentPane(GraphicsPanel);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		eaterPanel.setVisible(true);
 
 		options.updateSwingComponents();
         options.applySwingValues();

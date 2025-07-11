@@ -1,3 +1,6 @@
+import cpu.CpuState;
+import cpu.CpuStatePublisher;
+
 import java.util.Arrays;
 
 public class CPU {
@@ -36,8 +39,6 @@ public class CPU {
 	public Instruction[] lookup = new Instruction[0x100];
 
 	public CPU() {
-		reset();
-
 		Arrays.fill(lookup, new Instruction(OpCode.XXX, AddressMode.IMP, 2, false));
 
 		// useful reference for instructions: https://www.masswerk.at/6502/6502_instruction_set.html
@@ -323,6 +324,8 @@ public class CPU {
 		lookup[0x98] = new Instruction(OpCode.TYA, AddressMode.IMP, 2, false);
 
 		lookup[0xCB] = new Instruction(OpCode.WAI, AddressMode.IMP, 3, true);
+
+		reset();
 	}
 
 	void setFlag(char flag, boolean condition) {
@@ -448,6 +451,26 @@ public class CPU {
 		if (cycles < 0) {
 			cycles = 0;
 		}
+		CpuStatePublisher.notifyListeners(buildState());
+	}
+
+	private CpuState buildState() {
+		return new CpuState(
+				EaterEmulator.clocks,
+				ClocksPerSecond,
+				EaterEmulator.slowerClock,
+				programCounter,
+				stackPointer,
+				flags,
+				a,
+				x,
+				y,
+				addressAbsolute,
+				addressRelative,
+				opcode,
+				lookup[Byte.toUnsignedInt(opcode)].toNewModel(),
+				cycles
+		);
 	}
 
 	void executeAddressModeFunction(AddressMode addressMode) {
@@ -613,6 +636,8 @@ public class CPU {
 		startTime = System.currentTimeMillis();
 
 		opcode = Bus.read(programCounter);
+
+		CpuStatePublisher.notifyListeners(buildState());
 	}
 
 	void irq() {

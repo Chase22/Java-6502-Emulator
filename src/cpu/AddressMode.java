@@ -1,7 +1,5 @@
-/**
- * @deprecated Use enum in package cpi instead.
- */
-@Deprecated
+package cpu;
+
 public enum AddressMode {
 	ACC,    // OPC A or OPC			accumulator (implied)				
 	ABS,    // OPC $LLHH			absolute							
@@ -20,9 +18,5 @@ public enum AddressMode {
 	// WDC 65c02 ADDITIONS //
 
 	ZPI,    // OPC ($LL)			zeropage indirect
-	IAX;    // OPC ($LLHH,X)		indirect, x-indexed
-
-	public cpu.AddressMode toNewModel() {
-		return cpu.AddressMode.valueOf(this.name());
-	}
+	IAX,    // OPC ($LLHH,X)		indirect, x-indexed					
 }

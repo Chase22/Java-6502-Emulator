@@ -1,7 +1,5 @@
-/**
- * @deprecated Use enum in package cpi instead.
- */
-@Deprecated
+package cpu;
+
 public enum OpCode {
 	XXX,
 	NOP,
@@ -65,9 +63,5 @@ public enum OpCode {
 	TSX,
 	TXA,
 	TXS,
-	TRB, TSB, WAI, STP, RMB0, RMB1, RMB2, RMB3, RMB4, RMB5, RMB6, RMB7, BBR0, BBR1, BBR2, BBR3, BBR4, BBR5, BBR6, BBR7, BBS0, BBS1, BBS2, BBS3, BBS4, BBS5, BBS6, BBS7, SMB0, SMB1, SMB2, SMB3, SMB4, SMB5, SMB6, SMB7, TYA;
-
-	public cpu.OpCode toNewModel() {
-		return cpu.OpCode.valueOf(this.name());
-	}
+	TRB, TSB, WAI, STP, RMB0, RMB1, RMB2, RMB3, RMB4, RMB5, RMB6, RMB7, BBR0, BBR1, BBR2, BBR3, BBR4, BBR5, BBR6, BBR7, BBS0, BBS1, BBS2, BBS3, BBS4, BBS5, BBS6, BBS7, SMB0, SMB1, SMB2, SMB3, SMB4, SMB5, SMB6, SMB7, TYA
 }

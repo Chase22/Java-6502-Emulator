@@ -1,7 +1,5 @@
-/**
- * @deprecated Use class in package cpi instead.
- */
-@Deprecated
+package cpu;
+
 public class Instruction {
 	public OpCode opcode;
 	public AddressMode addressMode;
@@ -18,10 +16,6 @@ public class Instruction {
 	@Override
 	public String toString() {
 		return opcode+","+addressMode;
-	}
-
-	public cpu.Instruction toNewModel() {
-		return new cpu.Instruction(opcode.toNewModel(), addressMode.toNewModel(), cycles, wdc);
 	}
 }
 
