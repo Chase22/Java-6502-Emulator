@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class AddressConverterTest {
-	public static Stream<Arguments> externalToInternalAddressProvider() {
+	public static Stream<Arguments> testDataProvider() {
 		return Stream.of(
 				Arguments.of((short) 0, 0),
 				Arguments.of((short) 1, 1),
@@ -37,14 +37,14 @@ class AddressConverterTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("externalToInternalAddressProvider")
+	@MethodSource("testDataProvider")
 	void testConvertToInternalAddress(short externalAddress, int expectedInternalAddress) {
 		final AddressConverter converter = new AddressConverter(0);
 		assertThat(converter.toInternalAddress(externalAddress)).isEqualTo(expectedInternalAddress);
 	}
 
 	@ParameterizedTest
-	@MethodSource("externalToInternalAddressProvider")
+	@MethodSource("testDataProvider")
 	void testConvertToExternalAddress(short expectedExternalAddress, int internalAddress) {
 		final AddressConverter converter = new AddressConverter(0);
 		assertThat(converter.toExternalAddress(internalAddress)).isEqualTo(expectedExternalAddress);
