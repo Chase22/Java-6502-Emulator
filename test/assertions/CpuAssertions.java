@@ -1,0 +1,34 @@
+package assertions;
+
+import eater.cpu.CPU;
+import org.assertj.core.api.AbstractAssert;
+
+public class CpuAssertions extends AbstractAssert<CpuAssertions, CPU> {
+
+	CpuAssertions(CPU cpu) {
+		super(cpu, CpuAssertions.class);
+	}
+
+	public static CpuAssertions asserThat(CPU actual) {
+		return new CpuAssertions(actual);
+	}
+
+	private CpuAssertions registerHasValue(Byte registerValue, String registerName, byte expectedValue) {
+		if (registerValue != expectedValue) {
+			failWithMessage("Expected Register %s to have value %02X but was %02X", registerName, expectedValue, registerValue);
+		}
+		return this;
+	}
+
+	public CpuAssertions registerAIs(byte value) {
+		return registerHasValue(actual.a, "A", value);
+	}
+
+	public CpuAssertions registerXIs(byte value) {
+		return registerHasValue(actual.x, "X", value);
+	}
+
+	public CpuAssertions registerYIs(byte value) {
+		return registerHasValue(actual.y, "Y", value);
+	}
+}

@@ -1,4 +1,4 @@
-package memory;
+package eater.memory;
 
 import assertions.MemoryAssertions;
 import org.junit.jupiter.api.Test;

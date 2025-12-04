@@ -1,14 +1,8 @@
 package assertions;
 
-import memory.ReadOnlyMemory;
+import eater.memory.ReadOnlyMemory;
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ByteArrayAssert;
-import org.assertj.core.api.ByteAssert;
-
-import java.util.Arrays;
-
-import static java.lang.Double.doubleToLongBits;
 
 public class MemoryAssertions extends AbstractAssert<MemoryAssertions, ReadOnlyMemory> {
 	protected MemoryAssertions(ReadOnlyMemory actual) {

@@ -110,9 +110,9 @@ public class CPU {
 		if (waiting || stopped) return;
 
 		if (cycles == 0) {
-			InstructionSet currentInstruction = InstructionSet.getByAddress(opcode);
-			AddressMode currentAddressMode = currentInstruction.addressMode;
-			OpCode currentOpCode = currentInstruction.opcode;
+			InstructionSet currentInstruction = null;
+			AddressMode currentAddressMode = null;
+			OpCode currentOpCode = null;
 
 			if (interruptRequested)
 				irq();
@@ -123,6 +123,9 @@ public class CPU {
 				opcode = Bus.read(programCounter);
 				programCounter++;
 
+				currentInstruction = InstructionSet.getByAddress(opcode);
+				currentAddressMode = currentInstruction.addressMode;
+				currentOpCode = currentInstruction.opcode;
 				cycles = currentInstruction.cycles;
 
 				//Execute the functions corresponding to the addressing mode and opcode
