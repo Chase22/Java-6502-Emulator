@@ -306,7 +306,9 @@ public enum InstructionSet {
 	static {
 		lookup = new InstructionSet[0x100];
 		Arrays.fill(lookup, InstructionSet.XXX);
-		Arrays.stream(values()).forEach(value -> lookup[value.address] = value);
+
+		// Filter out the Invalid Instruction to avoid errors when adding it to the lookup
+		Arrays.stream(values()).filter(value -> value != InstructionSet.XXX).forEach(value -> lookup[value.address] = value);
 	}
 
 	/**
