@@ -353,4 +353,9 @@ public enum InstructionSet {
 		this.cycles = cycles;
 		this.wdc = wdc;
 	}
+
+	@Override
+	public String toString() {
+		return opcode+","+addressMode;
+	}
 }
