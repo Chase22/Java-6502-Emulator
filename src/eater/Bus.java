@@ -1,11 +1,12 @@
 package eater;
 
+
 public class Bus {
 	public static int VIA_ADDRESS = 0x7ff0;
 		public static int ACIA_ADDRESS = 0x5000;
 
 	public static byte read(short address) {
-		if (Short.toUnsignedInt(address) >= 0x8000) {
+		if (Short.toUnsignedInt(address) >= Short.toUnsignedInt(ROM.ADDRESS_OFFSET)) {
 			return EaterEmulator.rom.read(address);
 		} else if (Short.toUnsignedInt(address) <= VIA_ADDRESS+16 && Short.toUnsignedInt(address) >= VIA_ADDRESS) {
 			return EaterEmulator.via.read(address);
@@ -18,7 +19,7 @@ public class Bus {
 	}
 	
 	public static void write(short address, byte data) {
-		if (Short.toUnsignedInt(address) >= 0x8000) {
+		if (Short.toUnsignedInt(address) >= Short.toUnsignedInt(ROM.ADDRESS_OFFSET)) {
 			System.err.println("Can't write to ROM! ("+Integer.toHexString(Short.toUnsignedInt(address)).toUpperCase()+")");
 		} else if (Short.toUnsignedInt(address) <= VIA_ADDRESS+16 && Short.toUnsignedInt(address) >= VIA_ADDRESS) {
 			EaterEmulator.via.write(address, data);

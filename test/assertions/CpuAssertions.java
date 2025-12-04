@@ -13,22 +13,22 @@ public class CpuAssertions extends AbstractAssert<CpuAssertions, CPU> {
 		return new CpuAssertions(actual);
 	}
 
-	private CpuAssertions registerHasValue(Byte registerValue, String registerName, byte expectedValue) {
-		if (registerValue != expectedValue) {
+	private CpuAssertions registerHasValue(byte registerValue, String registerName, Number expectedValue) {
+		if (registerValue != expectedValue.byteValue()) {
 			failWithMessage("Expected Register %s to have value %02X but was %02X", registerName, expectedValue, registerValue);
 		}
 		return this;
 	}
 
-	public CpuAssertions registerAIs(byte value) {
+	public CpuAssertions registerAIs(Number value) {
 		return registerHasValue(actual.a, "A", value);
 	}
 
-	public CpuAssertions registerXIs(byte value) {
+	public CpuAssertions registerXIs(Number value) {
 		return registerHasValue(actual.x, "X", value);
 	}
 
-	public CpuAssertions registerYIs(byte value) {
+	public CpuAssertions registerYIs(Number value) {
 		return registerHasValue(actual.y, "Y", value);
 	}
 }
