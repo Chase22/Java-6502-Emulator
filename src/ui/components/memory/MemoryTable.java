@@ -4,14 +4,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
-import java.awt.*;
-import java.awt.font.FontRenderContext;
 
 public class MemoryTable extends JTable {
 	public MemoryTable(TableModel dm) {
 		super(dm);
 		setShowGrid(false);
 		autoResizeMode = JTable.AUTO_RESIZE_OFF;
+
+		setRowHeight(20);
+
 		//TODO the width here is static, not great when we want to change fontsize. Ideally measure the content dynamically
 		for (int i = 0; i < columnModel.getColumnCount(); i++) {
 			columnModel.getColumn(i).setMaxWidth(9999); // Otherwise the column collapses into the minimum size
