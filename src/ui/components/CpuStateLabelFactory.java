@@ -25,12 +25,13 @@ public class CpuStateLabelFactory {
 		return new CpuStateLabel(state -> {
 			String flagChars = "NVUBDIZC";
 			byte flags = state.flags();
-
 			String formattedFlags = "";
 			for (int i = 0; i < flagChars.length(); i++) {
 				char flagChar = flagChars.charAt(i);
-				boolean isSet = (flags & (1 << i)) != 0;
-				String formattedFlag = isSet ? "<font color='green'>%c</font>" : "<font color='red'>%c</font>";
+				boolean isSet = (flags & (1 << 7-i)) != 0; // we have to iterate the byte left to right instead of right-to-left
+
+				// lime == #00FF00
+				String formattedFlag = isSet ? "<font color='lime'>%c</font>" : "<font color='red'>%c</font>";
 				formattedFlags += String.format(formattedFlag, flagChar) + " ";
 			}
 			return String.format("<html><b>Flags: %s (%02X)</b></html>", formattedFlags, Byte.toUnsignedInt(flags));
