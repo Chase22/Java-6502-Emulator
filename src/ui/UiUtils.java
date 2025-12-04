@@ -3,29 +3,29 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class UiUtils {
-	public static void setFontRecursive(JComponent c, Font font) {
+	public static void applyToAllComponentsRecursively(Container c, Consumer<JComponent> block) {
 		Arrays.stream(c.getComponents()).forEach(child -> {
-			child.setFont(font);
 			if (child instanceof JComponent) {
-				setFontRecursive((JComponent) child, font);
+				block.accept((JComponent) child);
 			}
 			if (child instanceof Container) {
-				setFontRecursive((Container) child, font);
+				applyToAllComponentsRecursively((Container) child, block);
 			}
 		});
 	}
 
 	public static void setFontRecursive(Container c, Font font) {
-		Arrays.stream(c.getComponents()).forEach(child -> {
-			child.setFont(font);
-			if (child instanceof JComponent) {
-				setFontRecursive((JComponent) child, font);
-			}
-			if (child instanceof Container) {
-				setFontRecursive((Container) child, font);
-			}
-		});
+		applyToAllComponentsRecursively(c, (comp) -> comp.setFont(font));
+	}
+
+	public static void setBackgroundColorRecursively(Container c, Color color) {
+		applyToAllComponentsRecursively(c, (comp) -> comp.setBackground(color));
+	}
+
+	public static void setForegroundColorRecursively(Container c, Color color) {
+		applyToAllComponentsRecursively(c, (comp) -> comp.setForeground(color));
 	}
 }

@@ -1,5 +1,8 @@
 package ui;
 
+import cpu.CpuState;
+import ui.components.memory.MemoryPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -10,10 +13,19 @@ public class EaterPanel extends JFrame {
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setSize(800, 600);
 
-		getContentPane().setBackground(Color.BLUE);
-		getContentPane().setForeground(Color.WHITE);
+		//setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		setLayout(new FlowLayout());
 
-		add(new CPUPanel());
+		CPUPanel cpuPanel = new CPUPanel();
+		add(cpuPanel);
+		JPanel tablePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		tablePanel.add(new MemoryPanel(CpuState::ram, "ram"));
+		tablePanel.add(new MemoryPanel(CpuState::rom, "rom"));
+
+		add(tablePanel);
+
+		UiUtils.setBackgroundColorRecursively(this, Color.BLUE);
+		UiUtils.setForegroundColorRecursively(this, Color.WHITE);
 
 		Font font;
 		try {

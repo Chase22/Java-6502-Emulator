@@ -469,7 +469,9 @@ public class CPU {
 				addressRelative,
 				opcode,
 				lookup[Byte.toUnsignedInt(opcode)].toNewModel(),
-				cycles
+				cycles,
+				EaterEmulator.ram.getData(),
+				EaterEmulator.rom.getData()
 		);
 	}
 

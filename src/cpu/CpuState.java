@@ -14,7 +14,9 @@ public record CpuState(
 		short addressRelative,
 		byte opcode,
 		Instruction instruction,
-		int cycles
+		int cycles,
+		byte[] ram,
+		byte[] rom
 ) {
 }
 

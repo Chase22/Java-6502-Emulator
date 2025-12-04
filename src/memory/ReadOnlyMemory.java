@@ -2,6 +2,7 @@ package memory;
 
 import utils.AddressConverter;
 import utils.CollectionUtils;
+import utils.HexDumpFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,28 +83,7 @@ public class ReadOnlyMemory {
 	 * @return A string representation of the memory in hex format.
 	 */
 	public String formatToString(int bytesPerLine, boolean addresses) {
-		List<byte[]> chunks = new ArrayList<>();
-		int chunkAmount = (int) Math.ceil(data.length / (double) bytesPerLine);
-
-		for (int i = 0; i < chunkAmount; i++) {
-			int end = Math.min(data.length, (i + 1) * bytesPerLine);
-			byte[] chunk = Arrays.copyOfRange(data, i * bytesPerLine, end);
-			chunks.add(chunk);
-		}
-
-		var lines = CollectionUtils.withIndex(chunks).stream().map(indexedValue -> {
-					var localSb = new StringBuilder();
-					Byte[] chunk = CollectionUtils.toBoxedArray(indexedValue.value());
-
-					if (addresses)
-						localSb.append(String.format("%04X: ",  addressConverter.toExternalAddress(indexedValue.index() * bytesPerLine)));
-
-					localSb.append(String.join(" ", CollectionUtils.mapArray(chunk, (b -> String.format("%02X", b)))));
-					return localSb.toString();
-				}
-		).toList();
-
-		return String.join(System.lineSeparator(), lines);
+		return HexDumpFormatter.hexDump(data, bytesPerLine, addresses, addressOffset);
 	}
 
 	/**
