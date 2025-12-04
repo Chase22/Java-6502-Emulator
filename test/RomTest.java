@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Function;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static testutils.TestUtils.createTestArray;
 
 public class RomTest {
 	@Test
@@ -59,13 +58,5 @@ public class RomTest {
 
 		String romString = rom.formatToString(8, false);
 		assertThat(romString).isEqualTo("00 01 02 03 04 05 06 07");
-	}
-
-	private byte[] createTestArray(int size) {
-		byte[] testArray = new byte[size];
-		for (int i1 = 0; i1 < testArray.length; i1++) {
-			testArray[i1] = ((Function<Integer, Byte>) i -> (byte) (i % 256)).apply(i1);
-		}
-		return testArray;
 	}
 }

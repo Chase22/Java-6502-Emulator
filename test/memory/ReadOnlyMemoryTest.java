@@ -1,10 +1,10 @@
 package memory;
 
+import assertions.MemoryAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Function;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static testutils.TestUtils.createTestArray;
 
 public class ReadOnlyMemoryTest {
 	@Test
@@ -30,10 +30,10 @@ public class ReadOnlyMemoryTest {
 		byte[] testArray = createTestArray(0x8000);
 		ReadOnlyMemory rom = new ReadOnlyMemory(testArray);
 
-		assertThat(rom.read((short) 0)).isEqualTo((byte) 0);
-		assertThat(rom.read((short) 1)).isEqualTo((byte) 1);
-		assertThat(rom.read((short) 255)).isEqualTo((byte) 255);
-		assertThat(rom.read((short) 256)).isEqualTo((byte) 0);
+		MemoryAssertions.assertThat(rom).hasValueAt(0, 0);
+		MemoryAssertions.assertThat(rom).hasValueAt(1, 1);
+		MemoryAssertions.assertThat(rom).hasValueAt(255, 255);
+		MemoryAssertions.assertThat(rom).hasValueAt(256, 0);
 	}
 
 	@Test
@@ -41,12 +41,9 @@ public class ReadOnlyMemoryTest {
 		byte[] testArray = createTestArray(0x8000);
 		ReadOnlyMemory rom = new ReadOnlyMemory(testArray);
 
-		assertThat(rom.read((short) 0, 10))
-				.hasSize(10)
-				.containsExactly(
-						(byte) 0, (byte) 1, (byte) 2, (byte) 3, (byte) 4,
-						(byte) 5, (byte) 6, (byte) 7, (byte) 8, (byte) 9
-				);
+		MemoryAssertions.assertThat(rom).hasValuesAt((short) 0, 10, new byte[]{
+				(byte) 0, (byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6, (byte) 7, (byte) 8, (byte) 9
+		});
 	}
 
 	@Test
@@ -83,13 +80,5 @@ public class ReadOnlyMemoryTest {
 
 		String romString = rom.formatToString(8, true);
 		assertThat(romString).isEqualTo("8000: 00 01 02 03 04 05 06 07");
-	}
-
-	private byte[] createTestArray(int size) {
-		byte[] testArray = new byte[size];
-		for (int i1 = 0; i1 < testArray.length; i1++) {
-			testArray[i1] = ((Function<Integer, Byte>) i -> (byte) (i % 256)).apply(i1);
-		}
-		return testArray;
 	}
 }

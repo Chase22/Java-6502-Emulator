@@ -54,7 +54,7 @@ public class ReadOnlyMemory {
 		return read(address, 1)[0];
 	};
 
-	byte[] read(short address, int length) {
+	public byte[] read(short address, int length) {
 		int startAddress = addressConverter.toInternalAddress(address);
 
 		if (startAddress < 0) {
