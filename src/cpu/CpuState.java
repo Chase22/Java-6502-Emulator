@@ -13,7 +13,7 @@ public record CpuState(
 		short addressAbsolute,
 		short addressRelative,
 		byte opcode,
-		Instruction instruction,
+		InstructionSet instruction,
 		int cycles,
 		byte[] ram,
 		byte[] rom

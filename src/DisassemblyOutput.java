@@ -1,3 +1,6 @@
+import cpu.AddressMode;
+import cpu.InstructionSet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -26,7 +29,7 @@ public class DisassemblyOutput extends JFrame {
 	public static String disassembleUntil(short programCounter, short finalCount) {
 		StringBuilder str = new StringBuilder();
 		for (short j = 0; programCounter < finalCount; j++) {
-			Instruction currentInstruction = EaterEmulator.cpu.lookup[Byte.toUnsignedInt(Bus.read(programCounter))];
+			InstructionSet currentInstruction = InstructionSet.getByAddress(Bus.read(programCounter));
 			if (!str.isEmpty()) str.append("\n");
 			str.append(disassemble(programCounter));
 			switch (currentInstruction.addressMode) {
@@ -43,7 +46,7 @@ public class DisassemblyOutput extends JFrame {
 	public static String disassemble(short programCounter, short numInstructions) {
 		StringBuilder str = new StringBuilder();
 		for (short j = 0; j <= numInstructions; j++) {
-			Instruction currentInstruction = EaterEmulator.cpu.lookup[Byte.toUnsignedInt(Bus.read(programCounter))];
+			InstructionSet currentInstruction = InstructionSet.getByAddress(Bus.read(programCounter));
 			if (!str.isEmpty()) str.append("\n");
 			str.append(disassemble(programCounter));
 			switch (currentInstruction.addressMode) {
@@ -58,7 +61,7 @@ public class DisassemblyOutput extends JFrame {
 	}
 
 	public static String disassemble(short programCounter) {
-		Instruction currentInstruction = EaterEmulator.cpu.lookup[Byte.toUnsignedInt(Bus.read(programCounter))];
+		InstructionSet currentInstruction = InstructionSet.getByAddress(Bus.read(programCounter));
 
 		String str = toHexShortString(programCounter, 4) + ": " + currentInstruction.opcode.toString();
 		switch (currentInstruction.addressMode) {

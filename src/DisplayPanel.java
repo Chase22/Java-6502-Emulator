@@ -1,3 +1,5 @@
+import cpu.InstructionSet;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
@@ -6,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class DisplayPanel extends JPanel implements ActionListener, KeyListener {
-	Timer frameTimer = new javax.swing.Timer(16, this);;
+	Timer frameTimer = new javax.swing.Timer(16, this);
 	Timer clocksPerSecondCheckTimer = new Timer(150,this);
 	int ramPage = 0;
 	int romPage = 0;
@@ -149,7 +151,7 @@ public class DisplayPanel extends JPanel implements ActionListener, KeyListener 
         
         g.drawString("Absolute Address: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Short.toUnsignedInt(EaterEmulator.cpu.addressAbsolute)), 16)+" ("+ROMLoader.byteToHexString((byte)(EaterEmulator.cpu.addressAbsolute/0xFF))+ROMLoader.byteToHexString((byte)EaterEmulator.cpu.addressAbsolute)+")", 35, 350);
         g.drawString("Relative Address: "+ROMLoader.padStringWithZeroes(Integer.toBinaryString(Short.toUnsignedInt(EaterEmulator.cpu.addressRelative)), 16)+" ("+ROMLoader.byteToHexString((byte)(EaterEmulator.cpu.addressRelative/0xFF))+ROMLoader.byteToHexString((byte)EaterEmulator.cpu.addressRelative)+")", 35, 380);
-        g.drawString("Opcode: "+EaterEmulator.cpu.lookup[Byte.toUnsignedInt(EaterEmulator.cpu.opcode)]+" ("+ROMLoader.byteToHexString(EaterEmulator.cpu.opcode)+")", 35, 410);
+        g.drawString("Opcode: "+ InstructionSet.getByAddress(EaterEmulator.cpu.opcode)+" ("+ROMLoader.byteToHexString(EaterEmulator.cpu.opcode)+")", 35, 410);
         g.drawString("Cycles: "+EaterEmulator.cpu.cycles, 35, 440);
         
         int counter = 0;
