@@ -21,6 +21,21 @@ public class CpuTestBuilder {
 		cpu.reset();
 	}
 
+	public CpuTestBuilder withAccVal(int value) {
+		cpu.a = (byte) value;
+		return this;
+	}
+
+	public CpuTestBuilder withXVal(int value) {
+		cpu.x = (byte) value;
+		return this;
+	}
+
+	public CpuTestBuilder withYVal(int value) {
+		cpu.y = (byte) value;
+		return this;
+	}
+
 	public CpuTestBuilder withProgramCounter(short programCounter) {
 		cpu.programCounter = programCounter;
 		return this;
