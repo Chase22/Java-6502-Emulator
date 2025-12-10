@@ -21,6 +21,8 @@ public class CpuStateLabelFactory {
 		});
 	}
 
+
+	//FIXME use BitSet to simplify this code
 	public static CpuStateLabel forFlags() {
 		return new CpuStateLabel(state -> {
 			String flagChars = "NVUBDIZC";
